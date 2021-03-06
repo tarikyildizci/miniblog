@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import firebase from '../functions/firebase';
 
@@ -15,7 +15,7 @@ const CustomRoute = ({ needsUser, children, ...rest }) => {
         )
       ) : //non-user only route
       user ? (
-        <Redirect to="/home" />
+        <Redirect to="/explore" />
       ) : (
         <Route {...rest}>{children}</Route>
       )}

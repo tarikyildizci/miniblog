@@ -9,15 +9,21 @@ import {
 } from '@material-ui/core';
 import Post from '../components/Post';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import firebase, { getUserPost, logout } from '../functions/firebase';
+import firebase, {
+  getUserPost,
+  isUserInDatabase,
+  followUser,
+  unfollowUser,
+} from '../functions/firebase';
 
-const Profile = () => {
+const User = () => {
   const [display, setDisplay] = useState([]);
   const [userInfo, setUserInfo] = useState();
-
-  const history = useHistory();
+  const [following, setFollowing] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const location = useLocation();
 
   function truncate(input) {
     if (input.length > 250) {
@@ -26,16 +32,28 @@ const Profile = () => {
     return input;
   }
 
-  const Logout = async () => {
-    await logout();
-    history.push('/');
+  const Follow = async () => {
+    setButtonDisabled(true);
+    await followUser(firebase.auth().currentUser.uid, userInfo.uid);
+    setFollowing(true);
+    setButtonDisabled(false);
+  };
+  const Unfollow = async () => {
+    setButtonDisabled(true);
+    await unfollowUser(firebase.auth().currentUser.uid, userInfo.uid);
+    setFollowing(false);
+    setButtonDisabled(false);
   };
 
   const getPosts = async () => {
-    const user = firebase.auth().currentUser;
+    var path = location.pathname;
+    var userId = path.substring(6);
+    const user = await isUserInDatabase(userId);
     setUserInfo(user);
-    const posts = await getUserPost(user.uid);
+    const posts = await getUserPost(userId);
     setDisplay(posts);
+
+    setFollowing(user.followers.includes(firebase.auth().currentUser.uid));
   };
 
   useEffect(() => {
@@ -62,8 +80,13 @@ const Profile = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} align="center">
-          <Button variant="contained" color="secondary" onClick={Logout}>
-            Logout
+          <Button
+            disabled={buttonDisabled}
+            variant="contained"
+            color={following ? 'default' : 'primary'}
+            onClick={following ? Unfollow : Follow}
+          >
+            {following ? 'Unfollow' : 'Follow'}
           </Button>
         </Grid>
       </Grid>
@@ -85,4 +108,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default User;

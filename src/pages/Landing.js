@@ -31,8 +31,8 @@ const Landing = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography align="center" variant="h5">
-            Let the ideas flow.
+          <Typography align="center" variant="body1">
+            Read and write without any distractions. Let your ideas flow.
           </Typography>
         </Grid>
         <Grid item xs={12} align="center">

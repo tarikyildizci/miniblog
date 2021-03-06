@@ -1,5 +1,15 @@
-import { Explore, Home, Landing, NotFound, Profile, Redirect } from './pages';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  Explore,
+  Home,
+  Landing,
+  NotFound,
+  Profile,
+  Redirect,
+  Write,
+  User,
+  Post,
+} from './pages';
+import { HashRouter as Router, Switch } from 'react-router-dom';
 import CustomRoute from './components/CustomRoute';
 import Navbar from './components/Navbar';
 import firebase from './functions/firebase';
@@ -18,19 +28,30 @@ function App() {
           </CustomRoute>
           <CustomRoute needsUser={true} path="/home" exact>
             <Home />
+            <Navbar />
           </CustomRoute>
           <CustomRoute needsUser={true} path="/explore" exact>
             <Explore />
+            <Navbar />
           </CustomRoute>
           <CustomRoute needsUser={true} path="/profile" exact>
             <Profile />
+            <Navbar />
+          </CustomRoute>
+          <CustomRoute needsUser={true} path="/post/:id" exact>
+            <Post />
+            <Navbar />
           </CustomRoute>
           <CustomRoute needsUser={true} path="/user/:id" exact>
-            <Profile />
+            <User />
+            <Navbar />
+          </CustomRoute>
+          <CustomRoute needsUser={true} path="/write" exact>
+            <Write />
+            <Navbar />
           </CustomRoute>
         </Switch>
       </Router>
-      <Navbar />
     </div>
   );
 }

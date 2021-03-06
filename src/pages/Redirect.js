@@ -14,9 +14,9 @@ const Redirect = () => {
     var userDoc = await isUserInDatabase(user.uid); //Check if user has a document db
 
     if (userDoc) {
-      history.push('/home'); //If user exists in db, redirect
+      history.push('/explore'); //If user exists in db, redirect
     } else {
-      createUserDocument(user.uid).then(history.push('/home')); // Else, create document, then redirect
+      createUserDocument(user).then(history.push('/explore')); // Else, create document, then redirect
     }
   };
 
