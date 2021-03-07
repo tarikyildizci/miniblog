@@ -77,6 +77,7 @@ const Profile = () => {
               comments={post.comments ? post.comments.length : 0}
               authorId={post.authorId}
               postId={post.postId}
+              deletable
             />
           ))
         : 'Loading'}

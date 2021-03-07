@@ -1,9 +1,29 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-
-const Post = ({ title, body, author, comments, authorId, postId }) => {
+import { deletePost } from '../functions/firebase';
+const Post = ({
+  title,
+  body,
+  author,
+  comments,
+  authorId,
+  postId,
+  deletable = false,
+}) => {
   const history = useHistory();
+
+  const PostDelete = async (postId) => {
+    const response = await deletePost(postId);
+    if (response === 1) {
+      alert('There is an error with our servers. Please try again later.');
+    } else {
+      console.log(response);
+      alert('Post Deleted Successfully!');
+      history.push('/explore');
+    }
+  };
 
   return (
     <div style={{ margin: '4rem 0' }}>
@@ -15,7 +35,21 @@ const Post = ({ title, body, author, comments, authorId, postId }) => {
         style={{ cursor: 'pointer' }}
       >
         {title}
-      </Typography>
+        {'    '}
+      </Typography>{' '}
+      {deletable ? (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            PostDelete(postId);
+          }}
+        >
+          Delete
+        </Button>
+      ) : (
+        ''
+      )}
       <Typography
         variant="subtitle2"
         color="primary"

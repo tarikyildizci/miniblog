@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import Post from '../components/Post';
 
 import firebase, { getRandomPosts } from '../functions/firebase';
 
 const Explore = () => {
   const [display, setDisplay] = useState([]);
-  const [error, setError] = useState('');
 
   function truncate(input) {
     if (input.length > 500) {
@@ -19,7 +19,7 @@ const Explore = () => {
   const getPosts = async () => {
     const posts = await getRandomPosts();
     if (posts === 1) {
-      alert('There was an error.');
+      alert('There was an error, please try again.');
     } else {
       var tempArray = [];
       posts.map((post) => {
@@ -37,6 +37,13 @@ const Explore = () => {
 
   return (
     <Container maxWidth="sm">
+      <Typography
+        style={{ margin: '2rem 0', textDecoration: 'underline' }}
+        align="center"
+        variant="h3"
+      >
+        Explore
+      </Typography>
       {display &&
         display.map((post, key) => (
           <Post
@@ -49,7 +56,6 @@ const Explore = () => {
             postId={post.postId}
           />
         ))}
-      {error ? error : ''}
       <Toolbar />
     </Container>
   );

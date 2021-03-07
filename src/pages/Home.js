@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import Post from '../components/Post';
 
 import firebase, { getFollowingUsersPost } from '../functions/firebase';
@@ -20,9 +21,17 @@ const Home = () => {
     const user = firebase.auth().currentUser;
     const posts = await getFollowingUsersPost(user.uid);
     if (posts === 1) {
-      setError(<p>You are not following anyone.</p>);
+      setError(
+        <Typography variant="body1" align="center">
+          You are not following anyone.
+        </Typography>
+      );
     } else if (posts === 2) {
-      setError(<p>An error occured in the server, please try again.</p>);
+      setError(
+        <Typography variant="body1" align="center">
+          An error occured in the server, please try again.
+        </Typography>
+      );
     } else {
       var tempArray = [];
       posts.map((post) => {
@@ -38,6 +47,13 @@ const Home = () => {
 
   return (
     <Container maxWidth="sm">
+      <Typography
+        style={{ margin: '2rem 0', textDecoration: 'underline' }}
+        align="center"
+        variant="h3"
+      >
+        Home
+      </Typography>
       {display &&
         display.map((post, key) => (
           <Post

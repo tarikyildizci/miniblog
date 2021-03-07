@@ -194,3 +194,16 @@ export async function getRandomPosts() {
     return 1;
   }
 }
+
+export async function deletePost(postId) {
+  try {
+    const response = await firebase
+      .firestore()
+      .collection('posts')
+      .doc(`${postId}`)
+      .delete();
+    return response;
+  } catch (error) {
+    return 1;
+  }
+}

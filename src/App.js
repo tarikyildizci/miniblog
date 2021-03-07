@@ -9,7 +9,12 @@ import {
   User,
   Post,
 } from './pages';
-import { HashRouter as Router, Switch } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect as RouterRedirect,
+} from 'react-router-dom';
 import CustomRoute from './components/CustomRoute';
 import Navbar from './components/Navbar';
 import firebase from './functions/firebase';
@@ -50,6 +55,12 @@ function App() {
             <Write />
             <Navbar />
           </CustomRoute>
+          <CustomRoute needsUser={true} path="/404" exact>
+            <NotFound />
+          </CustomRoute>
+          <Route path="/">
+            <RouterRedirect to="/404" />
+          </Route>
         </Switch>
       </Router>
     </div>

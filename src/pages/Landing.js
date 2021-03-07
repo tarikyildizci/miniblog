@@ -14,10 +14,10 @@ const Landing = () => {
       if (user) {
         history.push('/redirect');
       } else {
-        console.log('There was an error signing in.');
+        alert('There was an error signing in.');
       }
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -25,17 +25,21 @@ const Landing = () => {
     <Container maxWidth="sm" style={{ height: '100vh' }}>
       <Grid container justify="center" alignItems="center">
         <Grid item xs={12}>
-          <Typography align="center" variant="h1">
+          <Typography align="center" variant="h1" style={{ margin: '5rem 0' }}>
             Miniblog
           </Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <Typography align="center" variant="body1">
+          <Typography
+            align="center"
+            variant="body1"
+            style={{ margin: '3rem 0' }}
+          >
             Read and write without any distractions. Let your ideas flow.
           </Typography>
         </Grid>
-        <Grid item xs={12} align="center">
+        <Grid item xs={12} align="center" style={{ margin: '3rem 0' }}>
           <GoogleButton
             onClick={() => {
               Login();

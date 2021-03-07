@@ -3,10 +3,11 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import { getSinglePost } from '../functions/firebase';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const Post = () => {
   const location = useLocation();
+  const history = useHistory();
   const [display, setDisplay] = useState();
 
   const getPost = async () => {
@@ -29,20 +30,12 @@ const Post = () => {
       {display ? (
         <>
           <Toolbar />
-          <Typography
-            variant="h4"
-            onClick={() => {
-              console.log('go to post');
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            {display.title}
-          </Typography>
+          <Typography variant="h4">{display.title}</Typography>
           <Typography
             variant="subtitle2"
             color="primary"
             onClick={() => {
-              console.log('go to author');
+              history.push('/user/' + display.authoId);
             }}
             style={{ cursor: 'pointer' }}
           >
