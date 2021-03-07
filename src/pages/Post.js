@@ -35,7 +35,7 @@ const Post = () => {
             variant="subtitle2"
             color="primary"
             onClick={() => {
-              history.push('/user/' + display.authoId);
+              history.push('/user/' + display.authorId);
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -44,7 +44,7 @@ const Post = () => {
           <Typography variant="body1">{display.body}</Typography>
         </>
       ) : (
-        'There was an error with our server.'
+        'Loading...'
       )}
 
       {display && display.comments > 0 ? (
